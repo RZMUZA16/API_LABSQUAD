@@ -1,0 +1,128 @@
+// ============================================
+// Prisma Schema - Sistem Poin Lab & Sertifikat
+// ============================================
+
+// Prisma Client Generator
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+// Database Connection
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// ENUM
+// ============================================
+enum status_sertifikat {
+  Menunggu
+  Diterima
+  Ditolak
+}
+
+enum user_role {
+  MAHASISWA
+  DOSEN
+  KAPLAB
+  ADMIN
+}
+
+model User {
+  id            String    @id
+  nama          String
+  email         String?   @unique
+  role          user_role @default(MAHASISWA)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relasi
+  sertifikat    sertifikat[]
+  poinLab       PoinLab[]
+}
+
+// ============================================
+// MODEL: SERTIFIKAT
+// ============================================
+model sertifikat {
+  id                   Int                @id @default(autoincrement())
+  nama_sertifikat      String
+  tipe_sertifikat      String
+  deskripsi_sertifikat String?
+  tanggal_kegiatan     DateTime
+  tanggal_upload       DateTime           @default(now())
+
+  fileupload           String
+  tipe_file            String
+  ukuran_file          Int
+
+  // Status & Review
+  status               status_sertifikat  @default(Menunggu)
+  catatan_admin        String?
+  reviewed_at          DateTime?
+  reviewed_by          String?            // ID user yang mereview (kepala lab)
+  
+  // Foreign Key ke user mahasiswa
+  studentId            String            
+  
+  // Relasi
+  activities           sertifikat_activity[]
+  poinLab              PoinLab[]
+
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+}
+
+
+model sertifikat_activity {
+  id            Int        @id @default(autoincrement())
+  
+  sertifikatId  Int
+  sertifikat    sertifikat @relation(fields: [sertifikatId], references: [id], onDelete: Cascade)
+
+  activityId    Int
+  activity      activity   @relation(fields: [activityId], references: [id])
+
+  createdAt     DateTime   @default(now())
+
+  @@unique([sertifikatId, activityId])
+}
+
+// ============================================
+// MODEL: ACTIVITY (Jenis kegiatan lab)
+// ============================================
+model activity {
+  id                    Int                  @id @default(autoincrement())
+  nama_activity         String
+  deskripsi_activity    String?
+  poin_default          Int                  @default(0)
+  is_active             Boolean              @default(true)
+  
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
+
+  // Relasi
+  sertifikatActivities  sertifikat_activity[]
+  poinLab               PoinLab[]
+}
+
+// ============================================
+// MODEL: POIN LAB
+// ============================================
+model PoinLab {
+  id                Int        @id @default(autoincrement())
+  studentId         String     
+  sertifikatId      Int
+  activityId        Int
+  poin              Int        @default(0)
+  
+  createdAt         DateTime   @default(now())
+
+  // Relasi
+  sertifikat        sertifikat @relation(fields: [sertifikatId], references: [id], onDelete: Cascade)
+  activity          activity   @relation(fields: [activityId], references: [id])
+
+  @@unique([studentId, sertifikatId, activityId])
+}
