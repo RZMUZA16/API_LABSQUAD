@@ -1,19 +1,33 @@
-import { fetchJson } from "../utils/httpClient";
+// services/sertifikatService.ts
+import {  httpClient } from '../utils/httpClient';
 
-const USER_SERVICE_URL = process.env.USER_SERVICE_URL || "http://localhost:4000/api";
+export const sertifikatService = {
+  async getAllStudent() {
+    const response = await httpClient.get("/sertifikat");
+    return response.data;
+  },
 
-/**
- * Ambil semua mahasiswa dari service user
- */
-export const getAllStudents = async () => {
-  const url = `${USER_SERVICE_URL}/students`;
-  return await fetchJson(url);
+  async getStudentById(id: number) {
+    const response = await httpClient.get(`/sertifikat/${id}`);
+    return response.data;
+  },
+
+  async create(data: any) {
+    const response = await httpClient.post("/sertifikat", data);
+    return response.data;
+  },
+
+  async update(id: number, data: any) {
+    const response = await httpClient.put(`/sertifikat/${id}`, data);
+    return response.data;
+  },
+
+  async delete(id: number) {
+    const response = await httpClient.delete(`/sertifikat/${id}`);
+    return response.data;
+  },
 };
 
-/**
- * Ambil mahasiswa berdasarkan ID dari service user
- */
-export const getStudentById = async (id: string) => {
-  const url = `${USER_SERVICE_URL}/students/${id}`;
-  return await fetchJson(url);
-};
+export function getAllStudents() {
+  throw new Error("Function not implemented.");
+}

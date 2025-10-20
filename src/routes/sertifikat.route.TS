@@ -1,7 +1,7 @@
 import {Hono} from 'hono'
 
 import {roleMiddleware} from '../middlewares/role.middleware';
-//import {} from '';
+
 import {
     uploadSertifikat,
     getSertifikatById,
@@ -13,7 +13,7 @@ import {
 
 
 const router = new Hono();
-
+export const sertifikatRoute = router;
 router.use('*,authMiddleware');
 
 router.post('/form', roleMiddleware(['MAHASISWA']), uploadSertifikat);

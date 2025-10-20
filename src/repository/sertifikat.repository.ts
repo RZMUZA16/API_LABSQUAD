@@ -1,6 +1,6 @@
-import { prisma } from "../utils/prisma";
+import prisma from "../utils/prisma";
 
-// 🔹 Ambil semua sertifikat (include relasi yang ada)
+
 export const findAll = async () => {
   return await prisma.sertifikat.findMany({
     include: {
@@ -48,7 +48,7 @@ export const update = async (id: number, data: any) => {
 export const updateStatus = async (id: number, status: string, catatan_admin?: string) => {
   return await prisma.sertifikat.update({
     where: { id },
-    data: { status, catatan_admin },
+    data: {  id ,catatan_admin },
   });
 };
 

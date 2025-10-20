@@ -15,7 +15,11 @@ export const getAllSertifikat = async (c: Context) => {
 // 📘 Get sertifikat berdasarkan ID
 export const getSertifikatById = async (c: Context) => {
   try {
-    const id = c.req.param("id");
+    const idParam = Number(c.req.param("id"));
+    const id = Number(idParam);
+    if (isNaN(id)) {
+      return errorResponse(c, "ID sertifikat tidak valid", null, 400);
+    }
     const sertifikat = await sertifikatService.getSertifikatById(id);
 
     if (!sertifikat) {
@@ -28,7 +32,9 @@ export const getSertifikatById = async (c: Context) => {
   }
 };
 
-// 📘 Upload sertifikat (misal file atau data baru)
+
+
+
 export const uploadSertifikat = async (c: Context) => {
   try {
     const body = await c.req.json();
@@ -40,13 +46,14 @@ export const uploadSertifikat = async (c: Context) => {
   }
 };
 
-// 📘 Update sertifikat (data umum)
+
 export const updateSertifikat = async (c: Context) => {
   try {
-    const id = c.req.param("id");
+    const idParam = c.req.param("id");
+    const id = Number(idParam);
     const body = await c.req.json();
 
-    const updated = await sertifikatService.updateSertifikat(id, body);
+    const updated = await sertifikatService.updateSertifikatStatus(id, body);
 
     if (!updated) {
       return errorResponse(c, "Sertifikat tidak ditemukan", null, 404);
@@ -61,7 +68,8 @@ export const updateSertifikat = async (c: Context) => {
 // 📘 Update status sertifikat (misal disetujui/dibatalkan)
 export const updateSertifikatStatus = async (c: Context) => {
   try {
-    const id = c.req.param("id");
+    const idParam = c.req.param("id");
+    const id = Number(idParam);
     const body = await c.req.json(); // { status: "approved" | "rejected" }
 
     const updatedStatus = await sertifikatService.updateSertifikatStatus(id, body.status);
@@ -79,7 +87,8 @@ export const updateSertifikatStatus = async (c: Context) => {
 // 📘 Hapus sertifikat
 export const deleteSertifikat = async (c: Context) => {
   try {
-    const id = c.req.param("id");
+    const idParam = c.req.param("id");
+    const id = Number(idParam);
     const deleted = await sertifikatService.deleteSertifikat(id);
 
     if (!deleted) {
