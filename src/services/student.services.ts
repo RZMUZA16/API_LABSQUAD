@@ -1,33 +1,28 @@
-// services/sertifikatService.ts
-import {  httpClient } from '../utils/httpClient';
+import { httpClient } from "../utils/httpClient";
 
-export const sertifikatService = {
-  async getAllStudent() {
-    const response = await httpClient.get("/sertifikat");
+export const studentService = {
+  async getAllStudents() {
+    const response = await httpClient.get("/students");
     return response.data;
   },
 
-  async getStudentById(id: number) {
-    const response = await httpClient.get(`/sertifikat/${id}`);
+  async getStudentById(id: string) {
+    const response = await httpClient.get(`/students/${id}`);
     return response.data;
   },
 
   async create(data: any) {
-    const response = await httpClient.post("/sertifikat", data);
+    const response = await httpClient.post("/students", data);
     return response.data;
   },
 
-  async update(id: number, data: any) {
-    const response = await httpClient.put(`/sertifikat/${id}`, data);
+  async update(id: string, data: any) {
+    const response = await httpClient.put(`/students/${id}`, data);
     return response.data;
   },
 
-  async delete(id: number) {
-    const response = await httpClient.delete(`/sertifikat/${id}`);
+  async delete(id: string) {
+    const response = await httpClient.delete(`/students/${id}`);
     return response.data;
   },
 };
-
-export function getAllStudents() {
-  throw new Error("Function not implemented.");
-}

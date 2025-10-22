@@ -1,6 +1,6 @@
 import {Hono} from 'hono'
 
-import {roleMiddleware} from '../middlewares/role.middleware';
+// import {roleMiddleware} from '../middlewares/role.middleware';
 
 import {
     uploadSertifikat,
@@ -16,6 +16,12 @@ const router = new Hono();
 export const sertifikatRoute = router;
 router.use('*,authMiddleware');
 
-router.post('/form', roleMiddleware(['MAHASISWA']), uploadSertifikat);
-router.get('/form/:id', roleMiddleware(['MAHASISWA','ADMIN']), getSertifikatById);
-router.get('/form', roleMiddleware(['ADMIN']), getAllSertifikat);
+ router.post('/form', //roleMiddleware(['MAHASISWA']), 
+ uploadSertifikat);
+
+router.get('/form/:id', //roleMiddleware(['MAHASISWA','ADMIN']),
+ getSertifikatById);
+
+router.get('/form', //roleMiddleware(['ADMIN']), 
+getAllSertifikat);
+     

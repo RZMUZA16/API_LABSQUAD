@@ -1,11 +1,11 @@
 import * as poinRepository from "../repository/poin.repository";
 
 export const getAllPoin = async () => {
-  return await poinRepository.findAll();
+  return await poinRepository.findallpoinlab();
 };
 
 export const getPoinById = async (id: number) => {
-  return await poinRepository.findById(id);
+  return await poinRepository.findpoinlabById(id);
 };
 
 export const createPoin = async (data: any) => {
@@ -13,13 +13,13 @@ export const createPoin = async (data: any) => {
   if (typeof data.value !== "number" || !data.description) {
     throw new Error("Data poin tidak lengkap");
   }
-  return await poinRepository.create(data);
+  return await poinRepository.createpoinlab(data);
 };
 
 export const updatePoin = async (id: number, data: any) => {
-  return await poinRepository.update(id, data);
+  return await poinRepository.updatepoinlab(data);
 };
 
 export const deletePoin = async (id: number) => {
-  return await poinRepository.remove(id);
+  return await poinRepository.deletepointlab(id);
 };

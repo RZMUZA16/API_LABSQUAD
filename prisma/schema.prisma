@@ -5,7 +5,6 @@
 // Prisma Client Generator
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 // Database Connection
@@ -29,77 +28,49 @@ enum user_role {
   KAPLAB
   ADMIN
 }
-
 model User {
-  id            String    @id
-  nama          String
-  email         String?   @unique
-  role          user_role @default(MAHASISWA)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id          Int           @id @default(autoincrement())
+  nama        String
+  email       String        @unique
+  password    String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   // Relasi
-  sertifikat    sertifikat[]
-  poinLab       PoinLab[]
+  sertifikat  sertifikat[]
+  poinLab     PoinLab[]
 }
 
-// ============================================
-// MODEL: SERTIFIKAT
-// ============================================
 model sertifikat {
-  id                   Int                @id @default(autoincrement())
-  nama_sertifikat      String
-  tipe_sertifikat      String
-  deskripsi_sertifikat String?
-  tanggal_kegiatan     DateTime
-  tanggal_upload       DateTime           @default(now())
+  id             Int        @id @default(autoincrement())
+  nama           String
+  deskripsi      String?
+  userId         Int?
+  createdAt      DateTime   @default(now())
 
-  fileupload           String
-  tipe_file            String
-  ukuran_file          Int
-
-  // Status & Review
-  status               status_sertifikat  @default(Menunggu)
-  catatan_admin        String?
-  reviewed_at          DateTime?
-  reviewed_by          String?            // ID user yang mereview (kepala lab)
-  
-  // Foreign Key ke user mahasiswa
-  studentId            String            
-  
-  // Relasi
-  activities           sertifikat_activity[]
-  poinLab              PoinLab[]
-
-  createdAt            DateTime           @default(now())
-  updatedAt            DateTime           @updatedAt
+  // Relasi balik
+  user           User?      @relation(fields: [userId], references: [id])
+  sertifikatActivities sertifikat_activity[]
 }
 
+model PoinLab {
+  id             Int         @id @default(autoincrement())
+  studentId      Int?
+  activityId     Int?
+  poin           Int
+  createdAt      DateTime    @default(now())
 
-model sertifikat_activity {
-  id            Int        @id @default(autoincrement())
-  
-  sertifikatId  Int
-  sertifikat    sertifikat @relation(fields: [sertifikatId], references: [id], onDelete: Cascade)
-
-  activityId    Int
-  activity      activity   @relation(fields: [activityId], references: [id])
-
-  createdAt     DateTime   @default(now())
-
-  @@unique([sertifikatId, activityId])
+  // Relasi balik
+  user           User?       @relation(fields: [studentId], references: [id])
+  activity       activity?   @relation(fields: [activityId], references: [id])
 }
 
-// ============================================
-// MODEL: ACTIVITY (Jenis kegiatan lab)
-// ============================================
 model activity {
   id                    Int                  @id @default(autoincrement())
   nama_activity         String
   deskripsi_activity    String?
   poin_default          Int                  @default(0)
   is_active             Boolean              @default(true)
-  
   createdAt             DateTime             @default(now())
   updatedAt             DateTime             @updatedAt
 
@@ -108,21 +79,11 @@ model activity {
   poinLab               PoinLab[]
 }
 
-// ============================================
-// MODEL: POIN LAB
-// ============================================
-model PoinLab {
-  id                Int        @id @default(autoincrement())
-  studentId         String     
-  sertifikatId      Int
-  activityId        Int
-  poin              Int        @default(0)
-  
-  createdAt         DateTime   @default(now())
+model sertifikat_activity {
+  id             Int           @id @default(autoincrement())
+  sertifikatId   Int
+  activityId     Int
 
-  // Relasi
-  sertifikat        sertifikat @relation(fields: [sertifikatId], references: [id], onDelete: Cascade)
-  activity          activity   @relation(fields: [activityId], references: [id])
-
-  @@unique([studentId, sertifikatId, activityId])
+  sertifikat     sertifikat    @relation(fields: [sertifikatId], references: [id])
+  activity       activity      @relation(fields: [activityId], references: [id])
 }

@@ -1,10 +1,7 @@
 import type { Context } from "hono";
 import { successResponse, errorResponse } from "../utils/response";
-import * as studentService from "../services/student.services";
+import { studentService } from "../services/student.services";
 
-/**
- * Ambil semua data mahasiswa dari service user eksternal
- */
 export const getAllStudents = async (c: Context) => {
   try {
     const students = await studentService.getAllStudents();
@@ -14,9 +11,6 @@ export const getAllStudents = async (c: Context) => {
   }
 };
 
-/**
- * Ambil detail mahasiswa berdasarkan ID
- */
 export const getStudentById = async (c: Context) => {
   try {
     const id = c.req.param("id");

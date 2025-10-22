@@ -1,38 +1,50 @@
-import prisma from "../utils/prisma";
-type Activity = {
-  id: number;
-  name: string;
-  date: string;
-  [key: string]: any;
+import { PrismaClient } from '@prisma/client';
+type activity={
+  id :number;
+  nama_activity :string;
+  deskripsi ?:string;
+  tanggal_activity :Date;
+  createdAt :Date;
+  updatedAt :Date;
+};
+const prisma = new PrismaClient();
+
+// Type untuk create dan update
+export type CreateActivity = Omit<activity, 'id' | 'createdAt' | 'updatedAt'>;
+export type UpdateActivity = Partial<CreateActivity>;
+
+export const findAllActivity = async (): Promise<activity[]> => {
+  return await prisma.activity.findMany({
+    orderBy: { createdAt: 'desc' },
+  });
 };
 
-let activities: Activity[] = [];
-let nextId = 1;
-
-export const findAll = async (): Promise<Activity[]> => {
-  return activities;
+export const findActivityById = async (id: number): Promise<activity | null> => {
+  return await prisma.activity.findUnique({
+    where: { id },
+  });
 };
 
-export const findById = async (id: number): Promise<Activity | undefined> => {
-  return activities.find(activity => activity.id === id);
+export const createActivity = async (data: CreateActivity): Promise<activity> => {
+  return await prisma.activity.create({
+    data,
+  });
 };
 
-export const create = async (data: Omit<Activity, "id">): Promise<Activity> => {
-  const newActivity: Activity = { id: nextId++, ...data };
-  activities.push(newActivity);
-  return newActivity;
+export const updateActivity = async (id: number, data: UpdateActivity): Promise<activity | null> => {
+  return await prisma.activity.update({
+    where: { id },
+    data,
+  }).catch(() => null); 
 };
 
-export const update = async (id: number, data: Partial<Activity>): Promise<Activity | undefined> => {
-  const index = activities.findIndex(activity => activity.id === id);
-  if (index === -1) return undefined;
-  activities[index] = { ...activities[index], ...data };
-  return activities[index];
-};
-
-export const remove = async (id: number): Promise<Activity | undefined> => {
-  const index = activities.findIndex(activity => activity.id === id);
-  if (index === -1) return undefined;
-  const [deleted] = activities.splice(index, 1);
-  return deleted;
+export const deleteActivity = async (id: number): Promise<boolean> => {
+  try {
+    await prisma.activity.delete({
+      where: { id },
+    });
+    return true;
+  } catch {
+    return false;
+  }
 };
