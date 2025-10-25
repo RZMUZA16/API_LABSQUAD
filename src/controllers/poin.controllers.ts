@@ -13,7 +13,7 @@ export const getAllPoin = async (c: Context) => {
 };
 
 // Get point by ID
-export const getPoinById = async (c: Context) => {
+export const getPoinById = async (c: Context) => {2
   try {
     const idParam = c.req.param("id");
     const id = Number(idParam);

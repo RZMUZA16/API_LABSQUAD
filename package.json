@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "bun --hot src/app.ts",
     "start": "NODE_ENV=production bun src/app.ts",
-    "build": "bun run build.ts"
+    "build": "bun run build.ts",
+    "seed": "bunx tsx prisma/seed.ts"
   },
   "dependencies": {
+    "@faker-js/faker": "^10.1.0",
     "@prisma/client": "^6.17.1",
     "bun-plugin-tailwind": "^0.0.15",
     "hono": "^4.9.9",
@@ -22,6 +24,10 @@
     "@types/bun": "latest",
     "@types/node": "^24.6.1",
     "@types/react": "^19",
-    "@types/react-dom": "^19"
+    "@types/react-dom": "^19",
+    "eslint": "^9.38.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "prettier": "^3.6.2"
   }
 }

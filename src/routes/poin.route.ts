@@ -1,25 +1,10 @@
 import { Hono } from "hono";
-//import { roleMiddleware}  from "../middlewares/role.middleware.ts";
-import {
-    createPoin, getAllPoin, getPoinById, updatePoin, deletePoin
-}from '../controllers/poin.controllers.ts';
+import * as poinController from "../controllers/poin.controllers";
 
-const router = new Hono();
-export const poinRoute = router;
+export const poinRoute = new Hono();
 
-router.get('/poin', //roleMiddleware(['admin','dosen', 'Mahasiswa']), 
-getAllPoin);
-//
-router.get('/poin/:id', //roleMiddleware(['admin','dosen', 'Mahasiswa']), 
-getPoinById);
-//
-router.post('/poin', //roleMiddleware(['Mahasiswa']),
-createPoin);
-//
-router.put('/poin/:id', //roleMiddleware(['Mahasiswa', 'admin']),
-updatePoin);
-//
-router.delete('/poin/:id', //roleMiddleware(['admin']),
-deletePoin);
-
-export default router
+poinRoute.get("/", poinController.getAllPoin);
+poinRoute.get("/:id", poinController.getPoinById);
+poinRoute.post("/", poinController.createPoin);
+poinRoute.put("/:id", poinController.updatePoin);
+poinRoute.delete("/:id", poinController.deletePoin);
