@@ -1,41 +1,30 @@
-import prisma from "../utils/prisma";
+import * as SertifikatService  from "../repository/sertifikat.repository";
 
-// Get all sertifikat
+
 export const getAllSertifikat = async () => {
-  return await prisma.sertifikat.findMany();
+  return await SertifikatService.findAll();
 };
 
 // Get sertifikat by ID
 export const getSertifikatById = async (id: number) => {
-  return await prisma.sertifikat.findUnique({
-    where: { id },
-  });
+  return await SertifikatService.findById(id);
 };
 
 // Create sertifikat
 export const createSertifikat = async (data: any) => {
-  return await prisma.sertifikat.create({
-    data,
-  });
+  return await SertifikatService.createSer(data);
 };
 
 // Update sertifikat
 export const updateSertifikatStatus = async (id: number, data: any) => {
-  return await prisma.sertifikat.update({
-    where: { id },
-    data,
-  });
+  return await SertifikatService.updateStatus(id, data.status, data.catatan_admin);
 };
 
 // Delete sertifikat
 export const deleteSertifikat = async (id: number) => {
-  return await prisma.sertifikat.delete({
-    where: { id },
-  });
+  return await SertifikatService.deleteser(id);
 };
 
-export const uploadSertifikat = async (data: any) => {
-  return await prisma.sertifikat.create({
-    data,
-  });
+export const uploadSertifikat = async (id: number,data: any) => {
+  return await SertifikatService.updateser(id, data);
 }

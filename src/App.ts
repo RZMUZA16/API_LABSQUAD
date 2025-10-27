@@ -1,6 +1,6 @@
 import {Hono} from "hono";
 import { serve } from "bun";
-import {studentRoute} from "./routes/student.route";
+import {studentRoute} from "./routes/user.repository";
 import {poinRoute} from "./routes/poin.route";
 import {activityRoute} from "./routes/activity.route";
 import {sertifikatRoute} from "./routes/sertifikat.route";

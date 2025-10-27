@@ -38,7 +38,7 @@ export const getSertifikatById = async (c: Context) => {
 export const uploadSertifikat = async (c: Context) => {
   try {
     const body = await c.req.json();
-    const newSertifikat = await sertifikatService.uploadSertifikat(body);
+    const newSertifikat = await sertifikatService.createSertifikat(body);
 
     return successResponse(c, "Sertifikat berhasil diunggah", newSertifikat, 201);
   } catch (error) {

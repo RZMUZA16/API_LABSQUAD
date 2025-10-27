@@ -1,27 +1,10 @@
-import {Hono} from 'hono'
+import {Hono }  from "hono";
+import * as sertifikatController from "../controllers/sertifikat.controller";
 
-// import {roleMiddleware} from '../middlewares/role.middleware';
+export const sertifikatRoute = new Hono();
 
-import {
-    uploadSertifikat,
-    getSertifikatById,
-    getAllSertifikat,
-    updateSertifikat,
-    updateSertifikatStatus,
-    deleteSertifikat
-} from '../controllers/sertifikat.controller';
-
-
-const router = new Hono();
-export const sertifikatRoute = router;
-router.use('*,authMiddleware');
-
- router.post('/form', //roleMiddleware(['MAHASISWA']), 
- uploadSertifikat);
-
-router.get('/form/:id', //roleMiddleware(['MAHASISWA','ADMIN']),
- getSertifikatById);
-
-router.get('/form', //roleMiddleware(['ADMIN']), 
-getAllSertifikat);
-     
+sertifikatRoute.get("/", sertifikatController.getAllSertifikat);
+sertifikatRoute.get("/:id", sertifikatController.getSertifikatById);
+sertifikatRoute.post("/", sertifikatController.uploadSertifikat);
+sertifikatRoute.put("/:id", sertifikatController.updateSertifikat);
+sertifikatRoute.delete("/:id", sertifikatController.deleteSertifikat);  

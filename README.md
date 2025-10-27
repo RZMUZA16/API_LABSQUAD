@@ -19,3 +19,9 @@ bun start
 ```
 
 This project was created using `bun init` in bun v1.2.23. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+
+kalau untuk user dibagi menjadi 3 denganberbeda kemampuan :
+- Student 
+* mengupload sertifikat
+* melihat pengkondisian
+* 

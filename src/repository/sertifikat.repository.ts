@@ -1,60 +1,71 @@
-import prisma from "../utils/prisma";
+import { PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient();
 
 export const findAll = async () => {
-  return await prisma.sertifikat.findMany({
+  return prisma.sertifikat.findMany({
     include: {
-      activities: {
+      user: true,
+      sertifikatActivities: {
         include: {
-          activity: true, // dari model sertifikat_activity -> activity
-        },
+          activity: {
+            include: {
+              poinLab: true, 
+            },
+          },},
       },
-      poinLab: true,
     },
   });
-};
+}
 
-// 🔹 Ambil satu sertifikat berdasarkan ID
 export const findById = async (id: number) => {
-  return await prisma.sertifikat.findUnique({
+  return prisma.sertifikat.findUnique({
     where: { id },
     include: {
-      activities: {
+      user: true,
+      sertifikatActivities: {
         include: {
-          activity: true,
+          activity: {
+            include: {
+              poinLab: true,
+            },
+          },
         },
       },
-      poinLab: true,
     },
   });
 };
 
 // 🔹 Buat sertifikat baru
-export const create = async (data: any) => {
-  return await prisma.sertifikat.create({
+export const createSer = async (data: any) => {
+  return prisma.sertifikat.create({
     data,
   });
 };
 
-// 🔹 Update sertifikat
-export const update = async (id: number, data: any) => {
-  return await prisma.sertifikat.update({
+export const updateser = async (id: number, data: any) => {
+  return prisma.sertifikat.update({
     where: { id },
-    data,
+    data:{},
   });
 };
 
-// 🔹 Update status sertifikat
-export const updateStatus = async (id: number, status: string, catatan_admin?: string) => {
-  return await prisma.sertifikat.update({
+export const updateStatus = async (
+  id: number,
+  status: string,
+  catatan_admin?: string
+) => {
+  return prisma.sertifikat.update({
     where: { id },
-    data: {  id ,catatan_admin },
+    data: { 
+      deskripsi: status,
+    },
   });
 };
 
 // 🔹 Hapus sertifikat
-export const remove = async (id: number) => {
-  return await prisma.sertifikat.delete({
+export const deleteser = async (id: number) => {
+  return prisma.sertifikat.delete({
     where: { id },
   });
 };

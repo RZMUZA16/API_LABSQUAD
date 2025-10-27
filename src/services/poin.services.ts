@@ -1,7 +1,7 @@
 import * as poinRepository from "../repository/poin.repository";
 
 export const getAllPoin = async () => {
-  return await poinRepository.findallpoinlab();
+  return await poinRepository.findAllPoinLab();
 };
 
 export const getPoinById = async (id: number) => {
@@ -17,7 +17,7 @@ export const createPoin = async (data: any) => {
 };
 
 export const updatePoin = async (id: number, data: any) => {
-  return await poinRepository.updatepoinlab(data);
+  return await poinRepository.updatepoinlab(id,data);
 };
 
 export const deletePoin = async (id: number) => {
