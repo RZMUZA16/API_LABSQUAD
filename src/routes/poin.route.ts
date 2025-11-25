@@ -5,6 +5,6 @@ export const poinRoute = new Hono();
 
 poinRoute.get("/", poinController.getAllPoin);
 poinRoute.get("/:id", poinController.getPoinById);
-poinRoute.post("/", poinController.createPoin);
-poinRoute.put("/:id", poinController.updatePoin);
-poinRoute.delete("/:id", poinController.deletePoin);
+poinRoute.post("/poin", poinController.createPoin);
+poinRoute.put("/poin/:id", poinController.updatePoin);
+poinRoute.delete("/delete_poin/:id", poinController.deletePoin);

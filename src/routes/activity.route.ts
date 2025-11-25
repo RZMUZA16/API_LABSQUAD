@@ -1,28 +1,19 @@
 import { Hono } from "hono";
-import { AktivitasgetAll,
-         aktivitasgetdariId, 
-         buataktivitas,
-         updateaktivitas,
-         deleteaktivias,
- } from "../controllers/activity.controllers.ts";
+import {
+  getAllActivities,
+  getActivitiesById,
+  createActivities,
+  updateActivities,
+  deleteActivities,
+} from "../controllers/activity.controllers.ts";
 
 export const activityRoute = new Hono();
 
-activityRoute.use("*,authMiddleware");
+activityRoute.get("/", getAllActivities);
 
+activityRoute.get("/:id", getActivitiesById);
 
-activityRoute.get("/", //roleMiddleware(['ADMIN']),
-  AktivitasgetAll);    
+activityRoute.post("/activity", createActivities);
 
-activityRoute.get("/:id", //roleMiddleware(['MAHASISWA','ADMIN']),
-  aktivitasgetdariId);    
-
-activityRoute.post("/activity", //roleMiddleware(['ADMIN']),
-  buataktivitas);    
-
-activityRoute.post("/:id", //roleMiddleware(['ADMIN']),
-  updateaktivitas);
-activityRoute.delete("/:id", //roleMiddleware(['ADMIN']),
-  deleteaktivias);
-
-
+activityRoute.post("/activity/:id", updateActivities);
+activityRoute.delete("/delete_activity/:id", deleteActivities);

@@ -26,8 +26,8 @@ enum user_role {
   MAHASISWA
   DOSEN
   KAPLAB
-  ADMIN
 }
+
 model User {
   id          Int           @id @default(autoincrement())
   nama        String
@@ -36,6 +36,8 @@ model User {
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   user_role   user_role     @default(MAHASISWA)
+  secret_key  String?       @unique
+   
 
   // Relasi
   sertifikat  sertifikat[]

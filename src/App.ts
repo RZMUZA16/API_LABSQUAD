@@ -1,6 +1,6 @@
 import {Hono} from "hono";
 import { serve } from "bun";
-import {studentRoute} from "./routes/user.repository";
+import {userRoute} from "./routes/user.route";
 import {poinRoute} from "./routes/poin.route";
 import {activityRoute} from "./routes/activity.route";
 import {sertifikatRoute} from "./routes/sertifikat.route";
@@ -8,10 +8,10 @@ import {sertifikatRoute} from "./routes/sertifikat.route";
 const app = new Hono();
 
 app.get("/", (c) => c.json({message: "Welcome to LabSquad"}));
-app.route("/api/students", studentRoute);
-app.route("/api/poin", poinRoute);
-app.route("/api/activity", activityRoute);
-app.route("/api/sertifikat", sertifikatRoute);
+app.route("/api/Users", userRoute);
+app.route("/api/Poin", poinRoute);
+app.route("/api/Activity", activityRoute);
+app.route("/api/Sertifikat", sertifikatRoute);
 const port = Number(process.env.PORT) || 3000;
 console.log ('server berjalan di localhost:'+port);
 

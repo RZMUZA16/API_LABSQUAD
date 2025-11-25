@@ -25,3 +25,8 @@ kalau untuk user dibagi menjadi 3 denganberbeda kemampuan :
 * mengupload sertifikat
 * melihat pengkondisian
 * 
+
+- dosen
+* melihat poin dari mahasiswa
+
+- kepala lab

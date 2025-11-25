@@ -3,7 +3,7 @@ import * as activityService from "../services/activity.services";
 import { successResponse, errorResponse } from "../utils/response";
 
 // Get all activities
-export const AktivitasgetAll = async (c: Context) => {
+export const getAllActivities = async (c: Context) => {
   try {
     const activities = await activityService.getAllActivities();
     return successResponse(c, "Daftar aktivitas berhasil diambil", activities);
@@ -13,7 +13,7 @@ export const AktivitasgetAll = async (c: Context) => {
 };
 
 // Get activity by ID
-export const aktivitasgetdariId = async (c: Context) => {
+export const getActivitiesById = async (c: Context) => {
   try {
     const idParam = c.req.param("id");
     const id = Number(idParam);
@@ -31,7 +31,7 @@ export const aktivitasgetdariId = async (c: Context) => {
 };
 
 // Create new activity
-export const buataktivitas = async (c: Context) => {
+export const createActivities = async (c: Context) => {
   try {
     const body = await c.req.json();
     const newActivity = await activityService.createActivity(body);
@@ -42,7 +42,7 @@ export const buataktivitas = async (c: Context) => {
 };
 
 // Update activity
-export const updateaktivitas = async (c: Context) => {
+export const updateActivities = async (c: Context) => {
   try {
     const idParam = c.req.param("id");
     const id = Number(idParam);
@@ -61,7 +61,7 @@ export const updateaktivitas = async (c: Context) => {
 };
 
 // Delete activity
-export const deleteaktivias = async (c: Context) => {
+export const deleteActivities = async (c: Context) => {
   try {
     const idParam = c.req.param("id");
     const id = Number(idParam);

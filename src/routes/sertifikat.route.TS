@@ -5,6 +5,6 @@ export const sertifikatRoute = new Hono();
 
 sertifikatRoute.get("/", sertifikatController.getAllSertifikat);
 sertifikatRoute.get("/:id", sertifikatController.getSertifikatById);
-sertifikatRoute.post("/", sertifikatController.uploadSertifikat);
-sertifikatRoute.put("/:id", sertifikatController.updateSertifikat);
-sertifikatRoute.delete("/:id", sertifikatController.deleteSertifikat);  
+sertifikatRoute.post("/sertifikat", sertifikatController.uploadSertifikat);
+sertifikatRoute.put("/sertifikat/:id", sertifikatController.updateSertifikat);
+sertifikatRoute.delete("/delete_sertifikat/:id", sertifikatController.deleteSertifikat);  

@@ -1,5 +1,5 @@
-import { PrismaClient, type activity} from "@prisma/client";
-
+import { PrismaClient, type activity } from "@prisma/client";
+import type { activityDto } from "../dto/activity.dto";
 const prisma = new PrismaClient();
 
 export const findAllActivity = async (): Promise<activity[]> => {
@@ -8,10 +8,12 @@ export const findAllActivity = async (): Promise<activity[]> => {
       poinLab: true,
       sertifikatActivities: true,
     },
-    });
+  });
 };
 
-export const findActivityById = async (id: number): Promise<activity | null> => {
+export const findActivityById = async (
+  id: number
+): Promise<activity | null> => {
   return prisma.activity.findUnique({
     where: { id },
     include: {
@@ -21,11 +23,7 @@ export const findActivityById = async (id: number): Promise<activity | null> => 
   });
 };
 
-export const createActivity = async (data:{
-  nama_activity: string;
-  description?: string;
-  date: Date;
-}): Promise<activity> => {
+export const createActivity = async (data: activityDto): Promise<activity> => {
   return prisma.activity.create({
     data,
   });
@@ -33,17 +31,12 @@ export const createActivity = async (data:{
 
 export const updateActivity = async (
   id: number,
-  data: {
-    nama_activity: string;
-    description?: string;
-    date: Date;
-  }
+  data: activityDto
 ): Promise<activity> => {
   return prisma.activity.update({
     where: { id },
     data,
   });
-  
 };
 
 export const deleteActivity = async (id: number): Promise<activity> => {
