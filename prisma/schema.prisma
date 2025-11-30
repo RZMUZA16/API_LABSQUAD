@@ -60,13 +60,13 @@ model sertifikat {
 
 model PoinLab {
   id             Int         @id @default(autoincrement())
-  studentId      Int?
+  sertifikatId   Int?
   activityId     Int?
   poin           Int
   createdAt      DateTime    @default(now())
 
   // Relasi balik
-  user           User?       @relation(fields: [studentId], references: [id])
+  sertifikat     sertifikat? @relation(fields: [sertifikatId], references: [id])
   activity       activity?   @relation(fields: [activityId], references: [id])
 }
 

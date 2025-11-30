@@ -27,14 +27,7 @@ export const createpoinlab = async (data: poinDto): Promise<PoinLab> => {
   });
 };
 
-export const updatepoinlab = async (
-  id: number,
-  data: {
-    studentId?: number;
-    activityId?: number;
-    poin: number;
-  }
-): Promise<PoinLab> => {
+export const updatepoinlab = async (id: number,data: Partial<poinDto>): Promise<PoinLab> => {
   return prisma.poinLab.update({
     where: { id },
     data,

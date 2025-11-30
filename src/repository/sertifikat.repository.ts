@@ -19,7 +19,7 @@ export const findAll = async () => {
 }
 
 export const findById = async (id: number) => {
-  return prisma.sertifikat.findUnique({
+return prisma.sertifikat.findUnique({
     where: { id },
     include: {
       user: true,

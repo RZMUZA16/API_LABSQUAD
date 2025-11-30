@@ -1,5 +1,5 @@
 export interface poinDto {
-    studentId?: number;
-      activityId?: number;
-      poin: number;
+  sertifikatId?: number;
+  activityId?: number;
+  poin: number;
 }

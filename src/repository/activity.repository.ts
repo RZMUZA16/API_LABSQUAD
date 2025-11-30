@@ -11,9 +11,7 @@ export const findAllActivity = async (): Promise<activity[]> => {
   });
 };
 
-export const findActivityById = async (
-  id: number
-): Promise<activity | null> => {
+export const findActivityById = async (id: number): Promise<activity | null> => {
   return prisma.activity.findUnique({
     where: { id },
     include: {
@@ -29,10 +27,7 @@ export const createActivity = async (data: activityDto): Promise<activity> => {
   });
 };
 
-export const updateActivity = async (
-  id: number,
-  data: activityDto
-): Promise<activity> => {
+export const updateActivity = async (id: number, data: activityDto): Promise<activity> => {
   return prisma.activity.update({
     where: { id },
     data,
