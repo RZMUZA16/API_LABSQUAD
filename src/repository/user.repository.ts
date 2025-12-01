@@ -5,11 +5,18 @@ const prisma = new PrismaClient();
 export const findAll = async (role?: user_role): Promise<User[]> => {
   return prisma.user.findMany({
     where: role ? { user_role: role } : {},
-    orderBy: { createdAt: "desc" },
     include: {
-      sertifikat: true,
-      poinLab: true,
+      sertifikatUser: {
+        include: {
+          sertifikat: {
+            include: {
+              poinLab: true,
+            },
+          },
+        },
+      },
     },
+    orderBy: { createdAt: "desc" },
   });
 };
 
@@ -17,8 +24,15 @@ export const findById = async (id: number): Promise<User | null> => {
   return prisma.user.findUnique({
     where: { id },
     include: {
-      sertifikat: true,
-      poinLab: true,
+      sertifikatUser: {
+        include: {
+          sertifikat: {
+            include: {
+              poinLab: true,
+            },
+          },
+        },
+      },
     },
   });
 };
@@ -31,17 +45,11 @@ export const findByEmail = async (email: string): Promise<User | null> => {
 
 export const create = async (data: userDto): Promise<User> => {
   return prisma.user.create({
-    data: {
-      nama: data.nama,
-      email: data.email,
-      password: data.password,
-    },
+    data,
   });
 };
 
-export const update = async (
-  id: number,
-  data: Partial<userDto>
+export const update = async (id: number,data: Partial<userDto>
 ): Promise<User> => {
   return prisma.user.update({
     where: { id },

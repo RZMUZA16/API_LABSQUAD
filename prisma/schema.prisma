@@ -13,9 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ============================================
-// ENUM
-// ============================================
+//ENUM
 enum status_sertifikat {
   Menunggu
   Diterima
@@ -28,67 +26,66 @@ enum user_role {
   KAPLAB
 }
 
+//MODEL
 model User {
-  id          Int           @id @default(autoincrement())
-  nama        String
-  email       String        @unique
-  password    String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  user_role   user_role     @default(MAHASISWA)
-  secret_key  String?       @unique
-   
+  id           Int                @id @default(autoincrement())
+  nama         String
+  email        String             @unique
+  password     String
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  user_role    user_role          @default(MAHASISWA)
+  secret_key   String?            @unique
 
   // Relasi
-  sertifikat  sertifikat[]
-  poinLab     PoinLab[]
+  sertifikatUser   SertifikatUser[]
 }
 
-model sertifikat {
-  id             Int        @id @default(autoincrement())
-  nama           String
-  deskripsi      String?
-  userId         Int?
-  createdAt      DateTime   @default(now())
-  status         status_sertifikat @default(Menunggu)
 
-  
-  // Relasi balik
-  user           User?      @relation(fields: [userId], references: [id])
-  sertifikatActivities sertifikat_activity[]
+model Sertifikat {
+  id           Int                   @id @default(autoincrement())
+  nama         String
+  deskripsi    String?
+  createdAt    DateTime              @default(now())
+  status       status_sertifikat     @default(Menunggu)
+
+  // Relasi
+  sertifikatUser     SertifikatUser[]
+  poinLab            PoinLab[]
 }
+
 
 model PoinLab {
-  id             Int         @id @default(autoincrement())
-  sertifikatId   Int?
+  id             Int          @id @default(autoincrement())
+  sertifikatId   Int
   activityId     Int?
   poin           Int
-  createdAt      DateTime    @default(now())
-
-  // Relasi balik
-  sertifikat     sertifikat? @relation(fields: [sertifikatId], references: [id])
-  activity       activity?   @relation(fields: [activityId], references: [id])
-}
-
-model activity {
-  id                    Int                  @id @default(autoincrement())
-  nama_activity         String
-  deskripsi_activity    String?
-  poin_default          Int                  @default(0)
-  is_active             Boolean              @default(true)
-  createdAt             DateTime             @default(now())
-  updatedAt             DateTime             @updatedAt
+  createdAt      DateTime     @default(now())
 
   // Relasi
-  sertifikatActivities  sertifikat_activity[]
+  sertifikat     Sertifikat   @relation(fields: [sertifikatId], references: [id])
+  activity       Activity?    @relation(fields: [activityId], references: [id])
+}
+
+model Activity {
+  id                    Int                   @id @default(autoincrement())
+  nama_activity         String
+  deskripsi_activity    String?
+  poin_default          Int                   @default(0)
+  is_active             Boolean               @default(true)
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+
+  // Relasi
   poinLab               PoinLab[]
 }
 
-model sertifikat_activity {
-  id             Int           @id @default(autoincrement())
+//RELASI
+model SertifikatUser {
+  id             Int         @id @default(autoincrement())
+  userId         Int
   sertifikatId   Int
-  activityId     Int
 
-  sertifikat     sertifikat    @relation(fields: [sertifikatId], references: [id])
-  activity       activity      @relation(fields: [activityId], references: [id])
+  user           User        @relation(fields: [userId], references: [id])
+  sertifikat     Sertifikat  @relation(fields: [sertifikatId], references: [id])
 }

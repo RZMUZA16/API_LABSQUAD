@@ -1,5 +1,4 @@
 export interface activityDto {
-    nama_activity: string;
-    description?: string;
-    date: Date;
+  nama_activity: string;
+  deskripsi_activity: string;
 }

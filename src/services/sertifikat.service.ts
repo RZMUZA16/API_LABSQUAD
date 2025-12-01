@@ -17,7 +17,7 @@ export const createSertifikat = async (data: any) => {
 
 // Update sertifikat
 export const updateSertifikatStatus = async (id: number, data: any) => {
-  return await SertifikatService.updateStatus(id, data.status, data.catatan_admin);
+  return await SertifikatService.updateStatus(id, data.status);
 };
 
 // Delete sertifikat

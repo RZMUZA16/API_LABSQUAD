@@ -1,5 +1,4 @@
-export interface userDto {
-    nama_activity: string;
-    description?: string;
-    date: Date;
+export interface sertifikatDto {
+    nama: string;
+    deskripsi: string;
 }

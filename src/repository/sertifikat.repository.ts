@@ -1,69 +1,64 @@
-import { PrismaClient } from "@prisma/client";
+import type { sertifikatDto } from "@/dto/sertifikat.dto";
+import { PrismaClient, type Sertifikat } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 export const findAll = async () => {
   return prisma.sertifikat.findMany({
     include: {
-      user: true,
-      sertifikatActivities: {
-        include: {
-          activity: {
-            include: {
-              poinLab: true, 
-            },
-          },},
+      sertifikatUser: {
+        include: { user: true },
       },
-    },
-  });
-}
-
-export const findById = async (id: number) => {
-return prisma.sertifikat.findUnique({
-    where: { id },
-    include: {
-      user: true,
-      sertifikatActivities: {
+      poinLab: {
         include: {
-          activity: {
-            include: {
-              poinLab: true,
-            },
-          },
+          activity: true, 
         },
       },
     },
   });
 };
 
-// 🔹 Buat sertifikat baru
-export const createSer = async (data: any) => {
-  return prisma.sertifikat.create({
-    data,
-  });
-};
-
-export const updateser = async (id: number, data: any) => {
-  return prisma.sertifikat.update({
+export const findById = async (id: number) => {
+  return prisma.sertifikat.findUnique({
     where: { id },
-    data:{},
-  });
-};
-
-export const updateStatus = async (
-  id: number,
-  status: string,
-  catatan_admin?: string
-) => {
-  return prisma.sertifikat.update({
-    where: { id },
-    data: { 
-      deskripsi: status,
+    include: {
+      sertifikatUser: {
+        include: { user: true },
+      },
+      poinLab: {
+        include: {
+          activity: true,
+        },
+      },
     },
   });
 };
 
-// 🔹 Hapus sertifikat
+export const createSer = async (data: sertifikatDto): Promise<Sertifikat> => {
+  return prisma.sertifikat.create({
+    data: {
+      nama: data.nama,
+      deskripsi: data.deskripsi,
+    },
+  });
+};
+
+export const updateser = async (id: number, data: Partial<Sertifikat>) => {
+  return prisma.sertifikat.update({
+    where: { id },
+    data,
+  });
+};
+
+export const updateStatus = async (id: number,data: Partial<Sertifikat>): Promise<Sertifikat> => {
+  return prisma.sertifikat.update({
+    where: { id },
+    data: {
+      status: data.status,
+    },
+  });
+};
+
 export const deleteser = async (id: number) => {
   return prisma.sertifikat.delete({
     where: { id },
