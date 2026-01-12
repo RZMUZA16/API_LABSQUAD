@@ -20,16 +20,12 @@ export const findpoinlabById = async (id: number): Promise<PoinLab | null> => {
 };
 
 
-export const createpoinlab = async (data: poinDto): Promise<PoinLab> => {
+export const createPoinLab = async (data: poinDto): Promise<PoinLab> => {
   return prisma.poinLab.create({
     data: {
       poin: data.poin,
-      sertifikat: {
-        connect: { id: data.sertifikatId }
-      },
-      activity: data.activityId
-        ? { connect: { id: data.activityId } }
-        : undefined
+      sertifikat: { connect: { id: data.sertifikatId } },
+      activity: { connect: { id: data.activityId } }
     },
     include: {
       sertifikat: true,
@@ -37,6 +33,7 @@ export const createpoinlab = async (data: poinDto): Promise<PoinLab> => {
     }
   });
 };
+
 
 export const updatepoinlab = async (
   id: number,

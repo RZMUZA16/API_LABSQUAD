@@ -53,9 +53,7 @@ export const updateser = async (id: number, data: Partial<Sertifikat>) => {
 export const updateStatus = async (id: number,data: Partial<Sertifikat>): Promise<Sertifikat> => {
   return prisma.sertifikat.update({
     where: { id },
-    data: {
-      status: data.status,
-    },
+    data: data,
   });
 };
 

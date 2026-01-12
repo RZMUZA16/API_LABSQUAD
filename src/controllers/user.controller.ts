@@ -1,7 +1,7 @@
 import type { Context } from "hono";
 import * as userService from "../services/user.services";
 import { successResponse, errorResponse } from "../utils/response";
-import { tr } from "@faker-js/faker";
+
 
 export const usergetAll = async (c: Context) => {
   try {

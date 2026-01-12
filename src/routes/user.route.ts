@@ -4,7 +4,7 @@ import {
   usergetdariId,
   usercreate,
   userupdate,
-  userdelete,
+  userdelete, 
 } from "../controllers/user.controller";
 
 const userRoutes = new Hono();
@@ -15,6 +15,7 @@ userRoute.get("/:id", usergetdariId);
 userRoute.post("/users", usercreate);
 userRoute.put("/users/:id", userupdate);
 userRoute.delete("/delete_users/:id", userdelete);
+
 
 //)
 export default userRoute;
