@@ -1,9 +1,6 @@
 // import type { Context, Next } from "hono";
 
-// /**
-//  * Middleware untuk memastikan user hanya bisa mengakses resource miliknya sendiri.
-//  * @param getResourceOwnerId Fungsi untuk mengambil ID pemilik resource dari request/context.
-//  */
+
 // export const ownershipMiddleware = (
 //   getResourceOwnerId: (c: Context) => Promise<number> | number
 // ) => {

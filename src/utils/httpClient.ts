@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 
-// Menggunakan fetch bawaan (tanpa axios)
 const API_BASE_URL = process.env.API_BASE_URL || "https://api-remote.example.com";
 
 export const httpClient = {

@@ -20,7 +20,6 @@ export const successResponse = <T>(
     message,
     data,
   };
-  // FIX: status harus dibungkus di object
   return c.json(response,  status );
 };
 

@@ -17,7 +17,7 @@ export const createPoin = async (data: poinDto) => {
     throw new Error("poin harus berupa angka");
   }
 
-  return await poinRepository.createpoinlab(data);
+  return await poinRepository.createPoinLab(data);
 };
 
 export const updatePoin = async (id: number, data: Partial<poinDto>) => {

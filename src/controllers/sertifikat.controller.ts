@@ -2,7 +2,6 @@ import type { Context } from "hono";
 import { successResponse, errorResponse } from "../utils/response";
 import * as sertifikatService from "../services/sertifikat.service";
 
-// 📘 Get semua sertifikat
 export const getAllSertifikat = async (c: Context) => {
   try {
     const sertifikats = await sertifikatService.getAllSertifikat();
@@ -16,7 +15,6 @@ export const getAllSertifikat = async (c: Context) => {
   }
 };
 
-// 📘 Get sertifikat berdasarkan ID
 export const getSertifikatById = async (c: Context) => {
   try {
     const idParam = Number(c.req.param("id"));
@@ -70,12 +68,11 @@ export const updateSertifikat = async (c: Context) => {
   }
 };
 
-// 📘 Update status sertifikat (misal disetujui/dibatalkan)
 export const updateSertifikatStatus = async (c: Context) => {
   try {
     const idParam = c.req.param("id");
     const id = Number(idParam);
-    const body = await c.req.json(); // { status: "approved" | "rejected" }
+    const body = await c.req.json(); 
 
     const updatedStatus = await sertifikatService.updateSertifikatStatus(
       id,
@@ -101,7 +98,6 @@ export const updateSertifikatStatus = async (c: Context) => {
   }
 };
 
-// 📘 Hapus sertifikat
 export const deleteSertifikat = async (c: Context) => {
   try {
     const idParam = c.req.param("id");

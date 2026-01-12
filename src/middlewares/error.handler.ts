@@ -1,6 +1,6 @@
 // import type { Context, Next } from "hono";
 
-// // Middleware error handler untuk aplikasi Hono
+
 // export const errorHandler = async (c: Context, next: Next) => {
 //   try {
 //     await next();

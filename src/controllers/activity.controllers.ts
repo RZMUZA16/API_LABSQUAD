@@ -2,7 +2,6 @@ import type { Context } from "hono";
 import * as activityService from "../services/activity.services";
 import { successResponse, errorResponse } from "../utils/response";
 
-// Get all activities
 export const getAllActivities = async (c: Context) => {
   try {
     const activities = await activityService.getAllActivities();
@@ -12,7 +11,6 @@ export const getAllActivities = async (c: Context) => {
   }
 };
 
-// Get activity by ID
 export const getActivitiesById = async (c: Context) => {
   try {
     const idParam = c.req.param("id");
@@ -30,7 +28,6 @@ export const getActivitiesById = async (c: Context) => {
   }
 };
 
-// Create new activity
 export const createActivities = async (c: Context) => {
   try {
     const body = await c.req.json();
@@ -41,7 +38,6 @@ export const createActivities = async (c: Context) => {
   }
 };
 
-// Update activity
 export const updateActivities = async (c: Context) => {
   try {
     const idParam = c.req.param("id");
@@ -60,7 +56,6 @@ export const updateActivities = async (c: Context) => {
   }
 };
 
-// Delete activity
 export const deleteActivities = async (c: Context) => {
   try {
     const idParam = c.req.param("id");

@@ -8,8 +8,8 @@ import { buffer } from "stream/consumers";
 const UPLOAD_DIR = "./uploads";
 
 /** 
-*  @param c  hono Context
-*  @param fieLdName nama field form-data
+*  @param c  
+*  @param fieLdName 
 */
 
 export const handleUpload = async (

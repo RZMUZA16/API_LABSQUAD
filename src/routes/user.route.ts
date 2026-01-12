@@ -16,6 +16,4 @@ userRoute.post("/users", usercreate);
 userRoute.put("/users/:id", userupdate);
 userRoute.delete("/delete_users/:id", userdelete);
 
-
-//)
 export default userRoute;
